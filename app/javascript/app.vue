@@ -1,16 +1,20 @@
 <template>
   <div>
-    <b-navbar type="dark" variant="dark">
+    <b-navbar type="dark" variant="success">
       <b-navbar-brand href="#">Invoice Generator</b-navbar-brand>
       <b-navbar-nav class="ml-auto">
         <b-nav-item>HI, THIS IS FREE INVOICE GENERATOR</b-nav-item>
         <b-button variant="light" href="https://invoicely.com/">Learn More</b-button>
-        <b-button href="https://invoicely.com/signup">Sign Up</b-button>
+        <b-button variant="danger" href="https://invoicely.com/signup">Sign Up</b-button>
       </b-navbar-nav>
     </b-navbar>
     <b-container fluid class="background-color">
       <b-row class="ml-auto">
-        <b-col align-self="center" cols="4">first patn</b-col>
+        <b-col align-self="center" cols="4">
+            <b-button @click="generatePdf()">
+              pdf
+            </b-button>
+        </b-col>
         <b-col align-self="end" cols="8">
           <b-container>
             <b-row>
@@ -18,7 +22,7 @@
                 <b-form-input id="input-small" size="sm" placeholder="Your company name"></b-form-input>
               </b-col>
               <b-col sm="5">
-                <b-nav-item>INVOICE</b-nav-item>
+                <b-item>INVOICE</b-item>
               </b-col>
               <b-col sm="5">
                 <b-form-input id="input-small" size="sm" placeholder="Your street"></b-form-input>
@@ -112,13 +116,18 @@ export default {
       ],
       text: ""
     };
+  },
+  methods: {
+    generatePdf() {
+      window.open("/invoice/invoice.pdf")
+    }
   }
 };
 </script>
 
 <style scoped>
 .background-color {
-  background-color: #200c50;
+  background-color: #ffffff;
   height: 100vh;
 }
 </style>
