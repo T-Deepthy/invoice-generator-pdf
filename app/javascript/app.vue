@@ -1,61 +1,65 @@
 <template>
   <div>
-    <b-navbar type="dark" variant="success">
+    <b-navbar type="dark" variant="info">
       <b-navbar-brand href="#">Invoice Generator</b-navbar-brand>
       <b-navbar-nav class="ml-auto">
         <b-nav-item>HI, THIS IS FREE INVOICE GENERATOR</b-nav-item>
         <b-button variant="light" href="https://invoicely.com/">Learn More</b-button>
-        <b-button variant="danger" href="https://invoicely.com/signup">Sign Up</b-button>
+        <b-button variant="info" href="https://invoicely.com/signup">Sign Up</b-button>
       </b-navbar-nav>
     </b-navbar>
     <b-container fluid class="background-color">
       <b-row class="ml-auto">
-        <b-col align-self="center" cols="4">
+        <b-col align-self="center" cols="1">
             <b-button @click="generatePdf()">
               pdf
             </b-button>
         </b-col>
-        <b-col align-self="end" cols="8">
+        <b-col align-self="end" cols="11">
           <b-container>
             <b-row>
-              <b-col sm="5">
-                <b-form-input id="input-small" size="sm" placeholder="Your company name"></b-form-input>
+              <b-col sm="6">
+                <b-input-group size="sm" class="mt-2">
+                  <b-form-input id="id1 " size="sm" placeholder="Your company name"></b-form-input>
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
+                  <b-form-input id="input-small" size="sm" placeholder="Your street"></b-form-input>
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
+                  <b-form-input id="input-small" size="sm" placeholder="Your town"></b-form-input>
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
+                  <b-form-input id="input-large" size="sm" placeholder="Address line 3"></b-form-input>
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
+                  <b-form-input id="imput-small" size="sm" placeholder="Phone number"></b-form-input>
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
+                  <b-form-input id="imput-small" size="sm" placeholder="Email id"></b-form-input>
+                </b-input-group>
               </b-col>
-              <b-col sm="5">
+              <b-col sm="6">
+                <b-input-group size="sm" class="mt-2">
                 <b-item>INVOICE</b-item>
-              </b-col>
-              <b-col sm="5">
-                <b-form-input id="input-small" size="sm" placeholder="Your street"></b-form-input>
-              </b-col>
-              <b-col sm="5">
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
                 <b-form-input id="input-small" size="sm" placeholder="Date"></b-form-input>
-              </b-col>
-              <b-col sm="5">
-                <b-form-input id="input-small" size="sm" placeholder="Your town"></b-form-input>
-              </b-col>
-              <b-col sm="5">
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
                 <b-form-input id="input-small" size="sm" placeholder="Invoice number"></b-form-input>
-              </b-col>
-              <b-col sm="5">
-                <b-form-input id="input-large" size="sm" placeholder="Address line 3"></b-form-input>
-              </b-col>
-              <b-col sm="5">
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
                 <b-form-input id="input-large" size="sm" placeholder="PO 682026"></b-form-input>
-              </b-col>
-              <b-col sm="5">
-                <b-form-input id="imput-small" size="sm" placeholder="Phone number"></b-form-input>
-              </b-col>
-              <b-col sm="5">
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
                 <b-form-input id="imput-small" size="sm" placeholder="Name"></b-form-input>
-              </b-col>
-              <b-col sm="5">
-                <b-form-input id="imput-small" size="sm" placeholder="Email id"></b-form-input>
-              </b-col>
-              <b-col sm="5">
+                </b-input-group>
+                <b-input-group size="sm" class="mt-2">
                 <b-form-input id="imput-small" size="sm" placeholder="Client Company Name"></b-form-input>
+                </b-input-group>
               </b-col>
             </b-row>
-            <b-row>
+            <b-row class="mt-2">
               <b-col>
                 <b-form-textarea
                   id="textarea"
@@ -67,6 +71,7 @@
               </b-col>
             </b-row>
             <div>
+              <b-row class="mt-2">
               <b-table small :fields="fields" :items="items">
                 <template slot="index" slot-scope="data"> {{ data.index + 1 }}</template>
                 <template slot="item"><b-form-input placeholder="item descp"></b-form-input></template>
@@ -74,6 +79,7 @@
                 <template slot="up"><b-form-input placeholder="0"></b-form-input></template>
                 <template slot="tot"><b-form-input placeholder="0"></b-form-input></template>
               </b-table>
+              </b-row>
             </div>
             <b-row>
               <b-col>
