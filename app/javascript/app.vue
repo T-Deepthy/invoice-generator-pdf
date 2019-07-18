@@ -51,7 +51,7 @@
                 </b-input-group>
               </b-col>
               <b-col sm="6">
-                <h2 class="mt-2">INVOICE</h2>
+                <h3 class="mt-2">INVOICE</h3>
                 <b-input-group size="sm" class="mt-2">
                   <b-form-input id="id1" size="sm" v-model="cldetails[0].date"></b-form-input>
                 </b-input-group>
@@ -89,6 +89,9 @@
                   </template>
                   <template slot="tot" slot-scope="data">
                     <b-form-input v-model="data.item.tot" disabled></b-form-input>
+                  </template>
+                  <template slot="FOOT_name" slot-scope="data">
+                    <strong>{{ data.label }}</strong>
                   </template>
                 </b-table>
               </b-row>
