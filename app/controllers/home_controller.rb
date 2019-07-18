@@ -2,6 +2,11 @@ class HomeController < ApplicationController
   def welcome
   end
   def print_invoice
+    @cdetails = JSON.parse(params["cdetails"])
+    @cldetails = JSON.parse(params["cldetails"])
+    @items = JSON.parse(params["items"])
+    @text1=JSON.parse(params["text1"])
+    @text2=JSON.parse(params["text2"])
     respond_to do |format|
       format.html
       format.pdf do
