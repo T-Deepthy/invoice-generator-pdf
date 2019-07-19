@@ -34,14 +34,16 @@ html, body, div, p{
 	<th>Unit Price</th>
 	<th>Total</th>
   </tr>
+  <% for i in @items%>
   <tr>
-    <td>1</td>
-    <td>item1</td>
-	<td>1</td>
-	<td>1000</td>
-	<td>1000</td>
+    <td><%=  %></td>
+    <td><%= @items[0]["item"] %></td>
+	<td><%= @items[0]["qty"] %></td>
+	<td><%= @items[0]["up"] %></td>
+	<td><%= @items[0]["tot"] %></td>
   </tr>
-  <tr>
+  <%end%>
+  <%# <tr>
     <td>1</td>
     <td>item2</td>
 	<td>1</td>
@@ -61,7 +63,7 @@ html, body, div, p{
 	<td>1</td>
 	<td>1000</td>
 	<td>1000</td>
-  </tr>
+  </tr> %>
 </table>
 </div>
 <div>

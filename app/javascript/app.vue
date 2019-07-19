@@ -96,9 +96,9 @@
                 </b-table>
               </b-row>
             </div>
-            <b-row>
+             <b-row class="mt-2">
               <b-col>
-                <b-form-textarea id="textarea" v-model="text2" rows="3" max-rows="6"></b-form-textarea>
+                <vue-editor id="editor" v-model="text2" :editor-toolbar="customToolbar"></vue-editor>
               </b-col>
             </b-row>
           </b-container>
@@ -157,8 +157,7 @@ export default {
   methods: {
     generatePdf() {
       window.open(
-        `/invoice/invoice.pdf?cdetails=${JSON.stringify(
-          this.cdetails
+        `/invoice/invoice.pdf?cdetails=${JSON.stringify(this.cdetails
         )}&cldetails=${JSON.stringify(this.cldetails)}&items=${JSON.stringify(
           this.items
         )}&text1=${JSON.stringify(this.text1)}&text2=${JSON.stringify(
