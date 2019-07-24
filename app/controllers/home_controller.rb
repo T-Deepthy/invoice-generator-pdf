@@ -3,11 +3,11 @@ class HomeController < ApplicationController
   end
   def print_invoice
     @cdetails = params["cdetails"] ? JSON.parse(params["cdetails"]) : []
-    @cldetails = params["cldetails"] ? JSON.parse(params["cdetails"]) : []
-    @items = params["items"] ? JSON.parse(params["cdetails"]) : []
-    @text1=params["text1"] ? JSON.parse(params["cdetails"]) : []
-    @text2=params["text2"] ? JSON.parse(params["cdetails"]) : []
-    @footer=params["footer"] ? JSON.parse(params["cdetails"]) : []
+    @cldetails = params["cldetails"] ? JSON.parse(params["cldetails"]) : []
+    @items = params["items"] ? JSON.parse(params["items"]) : []
+    @text1=params["text1"] ? JSON.parse(params["text1"]) : []
+    @text2=params["text2"] ? JSON.parse(params["text2"]) : []
+    @footer=params["footer"] ? JSON.parse(params["footer"]) : []
     respond_to do |format| 
       format.html
       format.pdf do
