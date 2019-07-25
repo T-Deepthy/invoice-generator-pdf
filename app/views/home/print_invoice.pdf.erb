@@ -3,6 +3,25 @@ html, body, div, p{
 	margin: 0;
 	padding:0;
 }
+.table__border { 
+border: 1px solid black;
+border-collapse: collapse;
+margin: 4rem 0;
+width: 100%;
+text-align: center;
+}
+td, th  {
+	 border: 1px solid black;
+}
+.text_align_left { 
+	text-align: left;
+}
+.width_50 {
+	width: 50px;
+}
+.width_150 {
+	width: 150px;
+}
 </style>
 <div style="width:100%; display: inline-block">
 	<div style="width:48%;float:left">
@@ -11,6 +30,8 @@ html, body, div, p{
 		<p><%= @cdetails[0]["town"] %></p>
 		<p><%= @cdetails[0]["phno"] %></p>
 		<p><%= @cdetails[0]["email"] %></p>
+		<p><%= @cdetails[0]["state_code"] %></p>
+		<p><%= @cdetails[0]["gst_no"] %></p>
 	</div>
 	<div style="width:48%;float:right; text-align:right">
 		<h1>INVOICE</h1>
@@ -19,17 +40,22 @@ html, body, div, p{
 		<p><%= @cldetails[0]["po"] %></p>
 		<p><%= @cldetails[0]["name"] %></p>
 		<p><%= @cldetails[0]["clname"] %></p>
+		<p><%= @cldetails[0]["state_code"] %></p>
+		<p><%= @cldetails[0]["gst_no"] %></p>
 	</div>
 </div>
+<hr>
 <div>
 <p><%= @text1.html_safe %></p>
 </div>
 </div>
 <div>
-<table>
+<table class="table__border">
   <tr>
     <th>Index</th>
+	<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 	<th>HSN/SSN</th>
+	<%end%>
     <th>Item Description</th>
 	<th>Quantity</th>
 	<th>Unit Price</th>
@@ -38,21 +64,153 @@ html, body, div, p{
   <% slno = 0%>
   <% @items.each do |item| %>
   <tr>
-    <td><%= slno+=1 %></td>
-	<td><%= item["sn"] %>
+    <td class="width_50"><%= slno+=1 %></td>
+	<% if @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+	<td><%= item["sn"] == "" ? "-" : item["sn"] %></td>
+	<%end%>
     <td><%= item["item"] %></td>
 	<td><%= item["qty"] %></td>
 	<td><%= item["up"] %></td>
-	<td><%= item["tot"] %></td>
+	<td class="width_150"><%= item["tot"] %></td>
   </tr>
   <%end%>
+
   <tfoot>
-    <tr>
-    <td colspan="5">
-    <p> <%= @footer %>
-    </td>
-    </tr>
-  </tfoot>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="5"  class="text_align_left">
+		<% else %>
+		<td colspan="4"  class="text_align_left">
+		<%end%>
+		<p><%= @footer[0]["subTotalText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["subTotal"]%></p>
+		</td>
+	</tr>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="4"  class="text_align_left">
+		<%else%>
+		<td colspan="3"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["discountText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["discount"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["discountPercentage"]%></p>
+		</td>
+	</tr>
+	<% if @cdetails[0]["state_code"] == @cldetails[0]["state_code"] && @cdetails[0]["gst_no"] && @cldetails[0]["gst_no"] %>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="4"  class="text_align_left">
+		<%else%>
+		<td colspan="3"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["sgstText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["sgstPercentage"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["sgst"]%></p>
+		</td>
+	</tr>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="4"  class="text_align_left">
+		<%else%>
+		<td colspan="3"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["cgstText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["cgstPercentage"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["cgst"]%></p>
+		</td>
+	</tr>
+	<% elsif @cdetails[0]["state_code"] != @cldetails[0]["state_code"] && @cdetails[0]["gst_no"] && @cldetails[0]["gst_no"] %>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="4"  class="text_align_left">
+		<%else%>
+		<td colspan="3"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["sgstText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["sgstPercentage"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["sgst"]%></p>
+		</td>
+	</tr>
+	<% elsif @cldetails[0]["state_code"]==32 && !cldetails[0]["gst_no"] %>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="4"  class="text_align_left">
+		<%else%>
+		<td colspan="3"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["sgstText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["sgstPercentage"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["sgst"]%></p>
+		</td>
+	</tr>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="4"  class="text_align_left">
+		<%else%>
+		<td colspan="3"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["cgstText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["cgstPercentage"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["cgst"]%></p>
+		</td>
+	</tr>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="4"  class="text_align_left">
+		<%else%>
+		<td colspan="3"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["kfcText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["kfcPercentage"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["kfc"]%></p>
+		</td>
+	</tr>
+	<%end%>
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="5"  class="text_align_left">
+		<% else %>
+		<td colspan="4"  class="text_align_left">
+		<% end %>
+		<p><%= @footer[0]["grandTotalText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["grandTotal"]%></p>
+		</td>
+	</tr>
+   </tfoot>
+ 
 </table>
 </div>
 <div>
