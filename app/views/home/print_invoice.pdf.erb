@@ -88,7 +88,7 @@ td, th  {
 		<p><%= @footer[0]["subTotal"]%></p>
 		</td>
 	</tr>
-	<% if @footer[0]["discountPercentage"]!=0 ||  @footer[0]["discountPercentage"]!=''%>
+	<% if @footer[0]["discountPercentage"]!=0 %>
 	<tr>
 		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 		<td colspan="4"  class="text_align_left">
@@ -104,101 +104,101 @@ td, th  {
 		<p><%= @footer[0]["discount"]%></p>
 		</td>
 	</tr>
-	<%end%>
-	<% if @cdetails[0]["state_code"] == @cldetails[0]["state_code"] && @cdetails[0]["gst_no"] && @cldetails[0]["gst_no"] %>
-	<tr>
-		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-		<td colspan="4"  class="text_align_left">
-		<%else%>
-		<td colspan="3"  class="text_align_left">
-		<% end %>
-		<p><%= @footer[0]["sgstText"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["sgstPercentage"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["sgst"]%></p>
-		</td>
-	</tr>
-	<tr>
-		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-		<td colspan="4"  class="text_align_left">
-		<%else%>
-		<td colspan="3"  class="text_align_left">
-		<% end %>
-		<p><%= @footer[0]["cgstText"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["cgstPercentage"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["cgst"]%></p>
-		</td>
-	</tr>
-	<% elsif @cdetails[0]["state_code"] != @cldetails[0]["state_code"] && @cdetails[0]["gst_no"] && @cldetails[0]["gst_no"] %>
-	<tr>
-		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-		<td colspan="4"  class="text_align_left">
-		<%else%>
-		<td colspan="3"  class="text_align_left">
-		<% end %>
-		<p><%= @footer[0]["sgstText"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["sgstPercentage"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["sgst"]%></p>
-		</td>
-	</tr>
-	<% elsif @cldetails[0]["state_code"]==32 && !cldetails[0]["gst_no"] %>
-	<tr>
-		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-		<td colspan="4"  class="text_align_left">
-		<%else%>
-		<td colspan="3"  class="text_align_left">
-		<% end %>
-		<p><%= @footer[0]["sgstText"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["sgstPercentage"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["sgst"]%></p>
-		</td>
-	</tr>
-	<tr>
-		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-		<td colspan="4"  class="text_align_left">
-		<%else%>
-		<td colspan="3"  class="text_align_left">
-		<% end %>
-		<p><%= @footer[0]["cgstText"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["cgstPercentage"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["cgst"]%></p>
-		</td>
-	</tr>
-	<tr>
-		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-		<td colspan="4"  class="text_align_left">
-		<%else%>
-		<td colspan="3"  class="text_align_left">
-		<% end %>
-		<p><%= @footer[0]["kfcText"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["kfcPercentage"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["kfc"]%></p>
-		</td>
-	</tr>
-	<%end%>
+	<%end%>   
+	<% if (@cdetails[0]["state_code"] == @cldetails[0]["state_code"]) && @cdetails[0]["gst_no"].present? && @cldetails[0]["gst_no"].present? %>
+		<tr>
+			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+			<td colspan="4"  class="text_align_left">
+			<%else%>
+			<td colspan="3"  class="text_align_left">
+			<% end %>
+			<p><%= @footer[0]["sgstText"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["sgstPercentage"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["sgst"]%></p>
+			</td>
+		</tr>
+		<tr>
+			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+			<td colspan="4"  class="text_align_left">
+			<%else%>
+			<td colspan="3"  class="text_align_left">
+			<% end %>
+			<p><%= @footer[0]["cgstText"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["cgstPercentage"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["cgst"]%></p>
+			</td>
+		</tr>
+	<% elsif (@cdetails[0]["state_code"] != @cldetails[0]["state_code"]) && @cdetails[0]["gst_no"].present? && @cldetails[0]["gst_no"].present? %>
+		<tr>
+			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+			<td colspan="4"  class="text_align_left">
+			<%else%>
+			<td colspan="3"  class="text_align_left">
+			<% end %>
+			<p><%= @footer[0]["igstText"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["igstPercentage"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["igst"]%></p>
+			</td>
+		</tr>
+	<% elsif (@cldetails[0]["state_code"] == "32") && @cldetails[0]["gst_no"].blank? %>
+		<tr>
+			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+			<td colspan="4"  class="text_align_left">
+			<%else%>
+			<td colspan="3"  class="text_align_left">
+			<% end %>
+			<p><%= @footer[0]["kfcText"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["kfcPercentage"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["kfc"]%></p>
+			</td>
+		</tr>
+		<tr>
+			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+			<td colspan="4"  class="text_align_left">
+			<%else%>
+			<td colspan="3"  class="text_align_left">
+			<% end %>
+			<p><%= @footer[0]["sgstText"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["sgstPercentage"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["sgst"]%></p>
+			</td>
+		</tr>
+		<tr>
+			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+			<td colspan="4"  class="text_align_left">
+			<%else%>
+			<td colspan="3"  class="text_align_left">
+			<% end %>
+			<p><%= @footer[0]["cgstText"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["cgstPercentage"]%></p>
+			</td>
+			<td>
+			<p><%= @footer[0]["cgst"]%></p>
+			</td>
+		</tr>
+	<%end%>	
 	<tr>
 		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 		<td colspan="5"  class="text_align_left">

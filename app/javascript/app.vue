@@ -285,7 +285,7 @@ export default {
           subTotal: "",
           discountText: "Discount",
           discount: 0,
-          discountPercentage: "",
+          discountPercentage: 0,
           cgstText: "CGST",
           cgstPercentage: 9,
           cgst: 0,
