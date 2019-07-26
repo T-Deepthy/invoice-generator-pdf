@@ -88,6 +88,7 @@ td, th  {
 		<p><%= @footer[0]["subTotal"]%></p>
 		</td>
 	</tr>
+	<% if @footer[0]["discountPercentage"]!=0 ||  @footer[0]["discountPercentage"]!=''%>
 	<tr>
 		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 		<td colspan="4"  class="text_align_left">
@@ -97,12 +98,13 @@ td, th  {
 		<p><%= @footer[0]["discountText"]%></p>
 		</td>
 		<td>
-		<p><%= @footer[0]["discount"]%></p>
-		</td>
-		<td>
 		<p><%= @footer[0]["discountPercentage"]%></p>
 		</td>
+		<td>
+		<p><%= @footer[0]["discount"]%></p>
+		</td>
 	</tr>
+	<%end%>
 	<% if @cdetails[0]["state_code"] == @cldetails[0]["state_code"] && @cdetails[0]["gst_no"] && @cldetails[0]["gst_no"] %>
 	<tr>
 		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
