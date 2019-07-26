@@ -3,7 +3,7 @@
     <b-navbar type="dark" variant="info">
       <b-navbar-brand href="#">HI, THIS IS FREE INVOICE GENERATOR</b-navbar-brand>
       <b-navbar-nav class="ml-auto">
-        <b-button variant="light" @click="generatePdf()">pdf</b-button>
+        <b-button variant="light" @click="generatePdf()">Generate PDF</b-button>
       </b-navbar-nav>
     </b-navbar>
     <b-container fluid class="background-color">
@@ -339,13 +339,13 @@ export default {
     },
     changeData(index) {
       if (this.items[index].qty && this.items[index].up) {
-        this.items[index].tot = this.items[index].qty * this.items[index].up;
+        this.items[index].tot = (this.items[index].qty * this.items[index].up).toFixed(2);
       }
       let subTotal = 0;
       this.items.map(item => {
         subTotal += item.tot;
       });
-      this.footer[0].subTotal = subTotal;
+      this.footer[0].subTotal = subTotal.toFixed(2);
     },
     findDiscount() {
       if (
@@ -356,7 +356,7 @@ export default {
       } else {
         let discount =
           (this.footer[0].discountPercentage / 100) * this.footer[0].subTotal;
-        this.footer[0].discount = discount
+        this.footer[0].discount = discount.toFixed(2);
         this.footer[0].newsubTotal = this.footer[0].subTotal-this.footer[0].discount;
       }
     },
@@ -391,11 +391,6 @@ export default {
       }
     },
     findGrandTotal() {
-      console.log('new su'+this.footer[0].newsubTotal)
-      console.log('igst'+this.footer[0].igst)
-      console.log('sgst'+this.footer[0].sgst)
-      console.log('cgst'+this.footer[0].cgst)
-      console.log('kfc'+this.footer[0].kfc)
       let grandTotal =
         parseFloat(this.footer[0].newsubTotal) +
         parseFloat(this.footer[0].igst) +
@@ -403,10 +398,9 @@ export default {
         parseFloat(this.footer[0].cgst) +
         parseFloat(this.footer[0].kfc) 
       this.footer[0].grandTotal = grandTotal.toFixed(2);
-      console.log('grandt'+this.footer[0].grandTotal)
     },
     addItemToTable() {
-      let row = { item: "", qty: 0, up: 0, tot: 0 };
+      let row = { sn:'-', item: "", qty: 0, up: 0, tot: 0 };
       this.items.push(row);
     },
     removeLastItem() {
