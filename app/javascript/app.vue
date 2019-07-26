@@ -12,7 +12,7 @@
           <b-row>
             <b-col sm="6">
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id1 " size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
+                <b-form-input id="id1 " :class="validation? 'border-red': ''" size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id2" size="sm" placeholder="Your street" v-model="cdetails[0].street"></b-form-input>
@@ -30,7 +30,7 @@
                 <b-form-input id="id6" size="sm" placeholder="Your Email id" v-model="cdetails[0].email"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id7" size="sm" placeholder="State Code" v-model="cdetails[0].state_code"></b-form-input>
+                <b-form-input id="id7" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cdetails[0].state_code"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id8" size="sm" placeholder="GST Number" v-model="cdetails[0].gst_no"></b-form-input>
@@ -51,10 +51,10 @@
                 <b-form-input id="id4" size="sm" placeholder="Name" v-model="cldetails[0].name"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id5" size="sm" placeholder="Client Company Name" v-model="cldetails[0].clname"></b-form-input>
+                <b-form-input id="id5" :class="validation? 'border-red': ''" size="sm" placeholder="Client Company Name" v-model="cldetails[0].clname"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id6" size="sm" placeholder="State Code" v-model="cldetails[0].state_code"></b-form-input>
+                <b-form-input id="id6" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cldetails[0].state_code"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id7" size="sm" placeholder="GST Number" v-model="cldetails[0].gst_no"></b-form-input>
@@ -69,8 +69,8 @@
           <div>
             <b-row class="ml-auto">
               <b-col class="p-4">
-                <b-button class="float-right ml-4" variant="danger" @click="removeLastItem()">Delete row</b-button>
-                <b-button class="float-right" variant="success" @click="addItemToTable()">Add row</b-button>
+                <b-button class="float-right ml-4" variant="danger" @click="removeLastItem()">- Delete row</b-button>
+                <b-button class="float-right" variant="success" @click="addItemToTable()">+ Add row</b-button>
               </b-col>
             </b-row>
             <b-row class="mt-2">
@@ -111,7 +111,7 @@
                       <b-form-input v-model="footer[0].subTotalText" disabled></b-form-input>
                     </td>
                     <td>
-                      <b-form-input v-model="footer[0].subTotal" disabled></b-form-input>
+                      <b-form-input :class="validation? 'border-red': ''" v-model="footer[0].subTotal" disabled></b-form-input>
                     </td>
                   </tr>
                   <tr>
@@ -238,6 +238,7 @@ export default {
   },
   data() {
     return {
+      validation: false,
       fields: [
         "index",
         { key: "sn", label: "HSN/SSN" },
@@ -282,7 +283,7 @@ export default {
       footer: [
         {
           subTotalText: "Sub Total",
-          subTotal: "",
+          subTotal: 0,
           discountText: "Discount",
           discount: 0,
           discountPercentage: 0,
@@ -319,7 +320,10 @@ export default {
   },
   methods: {
     generatePdf() {
-      window.open(
+      if (this.validatePDF())
+      {
+        this.validation = false
+        window.open(
         `/invoice/invoice.pdf?cdetails=${JSON.stringify(
           this.cdetails
         )}&cldetails=${JSON.stringify(this.cldetails)}&items=${JSON.stringify(
@@ -328,6 +332,13 @@ export default {
           this.text2
         )}&footer=${JSON.stringify(this.footer)}`
       );
+      }
+      else
+      {
+          window.alert("Missing fields");
+          this.validation = true
+      }
+      
     },
     createPDF() {
       const doc = new jsPDF();
@@ -339,7 +350,7 @@ export default {
     },
     changeData(index) {
       if (this.items[index].qty && this.items[index].up) {
-        this.items[index].tot = (this.items[index].qty * this.items[index].up).toFixed(2);
+        this.items[index].tot = this.items[index].qty * this.items[index].up;
       }
       let subTotal = 0;
       this.items.map(item => {
@@ -406,7 +417,14 @@ export default {
     removeLastItem() {
       this.items.pop();
     },
-    validateDiscount() {}
+    validatePDF() {
+     return ((this.items.length!=0) && 
+              (this.footer[0].subTotal!=0)&&
+              this.cdetails[0].state_code && 
+              this.cldetails[0].state_code && 
+              this.cdetails[0].cname && 
+              this.cldetails[0].clname);
+    }
   }
 };
 </script>
@@ -417,5 +435,8 @@ export default {
 }
 .item-table__item {
   width: 400px !important;
+}
+.border-red { 
+  border: #f00 1px solid;
 }
 </style>
