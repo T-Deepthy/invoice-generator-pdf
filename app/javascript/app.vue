@@ -339,14 +339,14 @@ export default {
       }
       
     },
-    createPDF() {
-      const doc = new jsPDF();
-      const contentHtml = this.$refs.content.innerHTML;
-      doc.fromHTML(contentHtml, 15, 15, {
-        width: 170
-      });
-      doc.save("sample.pdf");
-    },
+    // createPDF() {
+    //   const doc = new jsPDF();
+    //   const contentHtml = this.$refs.content.innerHTML;
+    //   doc.fromHTML(contentHtml, 15, 15, {
+    //     width: 170
+    //   });
+    //   doc.save("sample.pdf");
+    // },
     changeData(index) {
       if (this.items[index].qty && this.items[index].up) {
         this.items[index].tot = this.items[index].qty * this.items[index].up;
