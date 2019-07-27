@@ -248,8 +248,7 @@ export default {
         { key: "tot", label: "Total" }
       ],
       items: [
-        { sn: "-", item: "item1", qty: 0, up: 200, tot: 0 },
-        { sn: "-", item: "", qty: 0, up: 0, tot: 0 }
+        { sn: "-", item: "item1", qty: 0, up: 200, tot: 0 }
       ],
       cdetails: [
         {
