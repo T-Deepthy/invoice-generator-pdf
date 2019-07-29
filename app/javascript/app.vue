@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar type="dark" variant="info">
-      <b-navbar-brand href="#">HI, THIS IS FREE INVOICE GENERATOR</b-navbar-brand>
+      <b-navbar-brand href="#">This is a free <strong>GST</strong> invoice generator</b-navbar-brand>
       <b-navbar-nav class="ml-auto">
         <b-button variant="light" @click="generatePdf()">Generate PDF</b-button>
       </b-navbar-nav>
@@ -9,19 +9,27 @@
     <b-container fluid class="background-color">
       <b-col>
         <b-container ref="content">
+            
+               
           <b-row>
             <b-col sm="6">
+               <b-form-checkbox
+                id="checkbox-1"
+                v-model="status"
+                name="checkbox-1"
+                value="Tax Invoice"
+                unchecked-value="Tax Free Invoice"
+              >
+                Tax Invoice
+              </b-form-checkbox>
+
+              <div>Invoice Type: <strong>{{ status }}</strong></div>
+          
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id1 " :class="validation? 'border-red': ''" size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id2" size="sm" placeholder="Your street" v-model="cdetails[0].street"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id3" size="sm" placeholder="Your town" v-model="cdetails[0].town"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id4" size="sm" placeholder="Address line 3" v-model="cdetails[0].address"></b-form-input>
+                <b-form-input id="id4" size="sm" placeholder="Address" v-model="cdetails[0].address"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id5" size="sm" placeholder="Phone Number" v-model="cdetails[0].phno"></b-form-input>
@@ -30,16 +38,27 @@
                 <b-form-input id="id6" size="sm" placeholder="Your Email id" v-model="cdetails[0].email"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id7" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cdetails[0].state_code"></b-form-input>
+                <b-form-input id="id8" :class="validation? 'border-red': ''" size="sm" placeholder="GST Number" v-model="cdetails[0].gst_no"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id8" size="sm" placeholder="GST Number" v-model="cdetails[0].gst_no"></b-form-input>
+                <b-form-input id="id7" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cdetails[0].state_code"></b-form-input>
               </b-input-group>
+              
             </b-col>
             <b-col sm="6">
               <h3 class="mt-2">INVOICE</h3>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id1" size="sm" placeholder="Date" v-model="cldetails[0].date"></b-form-input>
+                <datepicker placeholder="Select Date" format="dd MMM yyyy" v-model="cldetails[0].date"></datepicker> 
+              
+              </b-input-group>          
+              <b-input-group size="sm" class="mt-2">              
+                <b-form-input id="id4" :class="validation? 'border-red': ''" size="sm" placeholder="Name" v-model="cldetails[0].name"></b-form-input>
+              </b-input-group>
+              <b-input-group size="sm" class="mt-2">
+                <b-form-input id="id5" size="sm" placeholder="Client Company Name" v-model="cldetails[0].clname"></b-form-input>
+              </b-input-group>
+               <b-input-group size="sm" class="mt-2">
+                <b-form-input id="id3" size="sm" placeholder="Address" v-model="cldetails[0].address"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id2" size="sm" placeholder="Invoice Number" v-model="cldetails[0].ino"></b-form-input>
@@ -47,18 +66,14 @@
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id3" size="sm" placeholder="Pin Code" v-model="cldetails[0].po"></b-form-input>
               </b-input-group>
+             
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id4" size="sm" placeholder="Name" v-model="cldetails[0].name"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id5" :class="validation? 'border-red': ''" size="sm" placeholder="Client Company Name" v-model="cldetails[0].clname"></b-form-input>
+                <b-form-input id="id7" size="sm" placeholder="GST Number" v-model="cldetails[0].gst_no"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id6" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cldetails[0].state_code"></b-form-input>
               </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id7" size="sm" placeholder="GST Number" v-model="cldetails[0].gst_no"></b-form-input>
-              </b-input-group>
+             
             </b-col>
           </b-row>
           <b-row class="mt-2">
@@ -107,14 +122,6 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="5">
-                      <b-form-input v-model="footer[0].subTotalText" disabled></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input :class="validation? 'border-red': ''" v-model="footer[0].subTotal" disabled></b-form-input>
-                    </td>
-                  </tr>
-                  <tr>
                     <td colspan="4">
                       <b-form-input v-model="footer[0].discountText" disabled></b-form-input>
                     </td>
@@ -125,6 +132,15 @@
                       <b-form-input v-model="footer[0].discount" disabled></b-form-input>
                     </td>
                   </tr>
+                  <tr>
+                    <td colspan="5">
+                      <b-form-input v-model="footer[0].subTotalText" disabled></b-form-input>
+                    </td>
+                    <td>
+                      <b-form-input :class="validation? 'border-red': ''" v-model="footer[0].newsubTotal" disabled></b-form-input>
+                    </td>
+                  </tr>
+                  
                   <template
                     v-if="(cdetails[0].state_code==cldetails[0].state_code) && cdetails[0].gst_no && cldetails[0].gst_no"
                   >
@@ -168,7 +184,7 @@
                   </template>
 
                   <template
-                    v-else-if="cldetails[0].state_code==32 && !cldetails[0].gst_no"
+                    v-else-if="cldetails[0].state_code==32 && cdetails[0].state_code==32 && !cldetails[0].gst_no && cdetails[0].gst_no"
                   >
                     <tr>
                       <td colspan="4">
@@ -224,16 +240,22 @@
           </b-row>
         </b-container>
       </b-col>
+      <p>copywriter @ Red Panthers Software Solutions</p>
     </b-container>
   </div>
 </template>
 <script>
+import Datepicker from "vuejs-datepicker";
 import { VueEditor } from "vue2-editor";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
+var state ={ 
+  date: new Date(2019, 7, 29)
+}
 export default {
   components: {
+    Datepicker,
     VueEditor
   },
   data() {
@@ -241,14 +263,14 @@ export default {
       validation: false,
       fields: [
         "index",
-        { key: "sn", label: "HSN/SSN" },
+        { key: "sn", label: "HSN/SAC" },
         { key: "item", label: "Item Description" },
         { key: "qty", label: "Quantity" },
         { key: "up", label: "Unit Price" },
         { key: "tot", label: "Total" }
       ],
       items: [
-        { sn: "-", item: "item1", qty: 0, up: 200, tot: 0 }
+        { sn: "998434", item: "Software Product", qty: 0, up: 200, tot: 0 }
       ],
       cdetails: [
         {
@@ -270,11 +292,13 @@ export default {
           name: "",
           clname: "",
           state_code: "",
-          gst_no: ""
+          gst_no: "",
+          address: ""
         }
       ],
-      text1: "",
-      text2: "",
+      text1: "Thanks for your service",
+      text2: "Payment terms: to be received in 5days",
+      status: "Tax Free Invoice",
       customToolbar: [
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }]
@@ -283,20 +307,21 @@ export default {
         {
           subTotalText: "Sub Total",
           subTotal: 0,
+          newsubTotal: 0,
           discountText: "Discount",
           discount: 0,
           discountPercentage: 0,
           cgstText: "CGST",
-          cgstPercentage: 9,
+          cgstPercentage: 0,
           cgst: 0,
           sgstText: "SGST",
-          sgstPercentage: 9,
+          sgstPercentage: 0,
           sgst: 0,
           igstText: "IGST",
-          igstPercentage: 18,
+          igstPercentage: 0,
           igst: 0,
           kfcText: "KFC",
-          kfcPercentage: 1,
+          kfcPercentage: 0,
           kfc: 0,
           grandTotalText: "Grand Total",
           grandTotal: 0
@@ -420,9 +445,10 @@ export default {
      return ((this.items.length!=0) && 
               (this.footer[0].subTotal!=0)&&
               this.cdetails[0].state_code && 
-              this.cldetails[0].state_code && 
+              this.cldetails[0].state_code &&
+              this.cdetails[0].gst_no&& 
               this.cdetails[0].cname && 
-              this.cldetails[0].clname);
+              this.cldetails[0].name);
     }
   }
 };

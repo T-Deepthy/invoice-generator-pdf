@@ -24,6 +24,9 @@ td, th  {
 }
 </style>
 <div style="width:100%; display: inline-block">
+	<div>
+	<p><%= @status %></p>
+	</div>
 	<div style="width:48%;float:left">
 		<h1><%= @cdetails[0]["cname"] %></h1>
 		<p><%= @cdetails[0]["street"] %></p>
@@ -54,7 +57,7 @@ td, th  {
   <tr>
     <th>Index</th>
 	<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-	<th>HSN/SSN</th>
+	<th>HSN/SAC</th>
 	<%end%>
     <th>Item Description</th>
 	<th>Quantity</th>
@@ -76,19 +79,7 @@ td, th  {
   <%end%>
 
   <tfoot>
-	<tr>
-		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
-		<td colspan="5"  class="text_align_left">
-		<% else %>
-		<td colspan="4"  class="text_align_left">
-		<%end%>
-		<p><%= @footer[0]["subTotalText"]%></p>
-		</td>
-		<td>
-		<p><%= @footer[0]["subTotal"]%></p>
-		</td>
-	</tr>
-	<% if @footer[0]["discountPercentage"]!=0 %>
+  <% if @footer[0]["discountPercentage"]!=0 %>
 	<tr>
 		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 		<td colspan="4"  class="text_align_left">
@@ -105,6 +96,19 @@ td, th  {
 		</td>
 	</tr>
 	<%end%>   
+	<tr>
+		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+		<td colspan="5"  class="text_align_left">
+		<% else %>
+		<td colspan="4"  class="text_align_left">
+		<%end%>
+		<p><%= @footer[0]["subTotalText"]%></p>
+		</td>
+		<td>
+		<p><%= @footer[0]["newsubTotal"]%></p>
+		</td>
+	</tr>
+	
 	<% if (@cdetails[0]["state_code"] == @cldetails[0]["state_code"]) && @cdetails[0]["gst_no"].present? && @cldetails[0]["gst_no"].present? %>
 		<tr>
 			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
@@ -217,4 +221,7 @@ td, th  {
 </div>
 <div>
 <p><%= @text2.html_safe %></p>
+</div>
+<div>
+      <p>copywriter @ Red Panthers Software Solutions</p>
 </div>

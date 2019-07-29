@@ -8,6 +8,8 @@ class HomeController < ApplicationController
     @text1=params["text1"] ? JSON.parse(params["text1"]) : []
     @text2=params["text2"] ? JSON.parse(params["text2"]) : []
     @footer=params["footer"] ? JSON.parse(params["footer"]) : []
+    @status = params["status"] ? JSON.parse(params["status"]) : []
+
     respond_to do |format| 
       format.html
       format.pdf do
