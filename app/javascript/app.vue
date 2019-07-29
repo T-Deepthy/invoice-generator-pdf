@@ -19,13 +19,15 @@
                 name="checkbox-1"
                 value="Tax Invoice"
                 unchecked-value="Invoice"
+                class="mb-4"
               >
                 Tax Invoice
+                <div>Invoice Type: <strong>{{ status }}</strong></div>
               </b-form-checkbox>
 
-              <div>Invoice Type: <strong>{{ status }}</strong></div>
+              
           
-              <b-input-group size="sm" class="mt-6">
+              <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id1 " :class="validation? 'border-red': ''" size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
@@ -464,8 +466,4 @@ export default {
 .border-red { 
   border: #f00 1px solid;
 }
-.mt-0 {
-  margin-top: 0 !important;
-}
-
 </style>
