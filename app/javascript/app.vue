@@ -25,7 +25,7 @@
 
               <div>Invoice Type: <strong>{{ status }}</strong></div>
           
-              <b-input-group size="sm" class="mt-10">
+              <b-input-group size="sm" class="mt-6">
                 <b-form-input id="id1 " :class="validation? 'border-red': ''" size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
@@ -168,7 +168,7 @@
                     </tr>
                   </template>
                   <template
-                    v-else-if="(cdetails[0].state_code!=cldetails[0].state_code) && cdetails[0].gst_no && cldetails[0].gst_no"
+                    v-else-if="(cdetails[0].state_code!=cldetails[0].state_code) && cdetails[0].gst_no"
                   >
                     <tr>
                       <td colspan="4">
@@ -308,19 +308,19 @@ export default {
           subTotalText: "Sub Total",
           subTotal: 0,
           newsubTotal: 0,
-          discountText: "Discount",
+          discountText: "Discount%",
           discount: 0,
           discountPercentage: 0,
-          cgstText: "CGST",
+          cgstText: "CGST%",
           cgstPercentage: 0,
           cgst: 0,
-          sgstText: "SGST",
+          sgstText: "SGST%",
           sgstPercentage: 0,
           sgst: 0,
-          igstText: "IGST",
+          igstText: "IGST%",
           igstPercentage: 0,
           igst: 0,
-          kfcText: "KFC",
+          kfcText: "KFC%",
           kfcPercentage: 0,
           kfc: 0,
           grandTotalText: "Grand Total",
@@ -464,4 +464,8 @@ export default {
 .border-red { 
   border: #f00 1px solid;
 }
+.mt-0 {
+  margin-top: 0 !important;
+}
+
 </style>
