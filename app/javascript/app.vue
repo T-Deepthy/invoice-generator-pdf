@@ -18,14 +18,14 @@
                 v-model="status"
                 name="checkbox-1"
                 value="Tax Invoice"
-                unchecked-value="Tax Free Invoice"
+                unchecked-value="Invoice"
               >
                 Tax Invoice
               </b-form-checkbox>
 
               <div>Invoice Type: <strong>{{ status }}</strong></div>
           
-              <b-input-group size="sm" class="mt-2">
+              <b-input-group size="sm" class="mt-10">
                 <b-form-input id="id1 " :class="validation? 'border-red': ''" size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
@@ -240,7 +240,7 @@
           </b-row>
         </b-container>
       </b-col>
-      <p>copywriter @ Red Panthers Software Solutions</p>
+      <p>© Copyright 2019 Red Panthers Software Solution, Inc.</p>
     </b-container>
   </div>
 </template>
@@ -297,8 +297,8 @@ export default {
         }
       ],
       text1: "Thanks for your service",
-      text2: "Payment terms: to be received in 5days",
-      status: "Tax Free Invoice",
+      text2: "Payment terms: to be received in 5 days",
+      status: "Invoice",
       customToolbar: [
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }]
