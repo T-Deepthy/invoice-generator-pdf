@@ -355,16 +355,33 @@ export default {
         this.findsgst();
         this.findigst();
         this.findkfc();
-        this.findGrandTotal();
+        this.findGrandTotal();  
     },
     generatePdf() {
       if (this.validatePDF())
       {
+        var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
         let url =`/invoice/invoice.pdf?cdetails=${JSON.stringify(this.cdetails)}&cldetails=${JSON.stringify(this.cldetails)}&items=${JSON.stringify(this.items)}&text1=${JSON.stringify(this.text1)}&text2=${JSON.stringify(this.text2)}&footer=${JSON.stringify(this.footer)}&status=${JSON.stringify(this.status)}`
-        const link = document.createElement('a');
-        link.href = url;
-        link.click();
-
+        if(is_chrome)  
+        {
+          const link = document.createElement('a');
+          link.href = url;
+          link.click();
+        }
+      
+        else
+        {
+            this.validation = false
+            window.open(`/invoice/invoice.pdf?cdetails=${JSON.stringify(this.cdetails)}&cldetails=${JSON.stringify(this.cldetails)}&items=${JSON.stringify(this.items)}&text1=${JSON.stringify(this.text1)}&text2=${JSON.stringify(this.text2)}&footer=${JSON.stringify(this.footer)}&status=${JSON.stringify(this.status)}`);
+        }
+      }
+      else
+      {
+          window.alert("Missing fields");
+          this.validation = true
+      }
+    },
+      
       //   this.validation = false
       //   axios.post(
       //   `/invoice/invoice.pdf?cdetails=${JSON.stringify(
@@ -387,14 +404,7 @@ export default {
       // link.click();
       // console.log('test')
     // });
-      }
-      else
-      {
-          window.alert("Missing fields");
-          this.validation = true
-      }
-      
-    },
+     
     // createPDF() {
     //   const doc = new jsPDF();
     //   const contentHtml = this.$refs.content.innerHTML;
