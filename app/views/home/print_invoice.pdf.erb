@@ -24,27 +24,31 @@ td, th  {
 }
 </style>
 <div style="width:100%; display: inline-block">
-	<div>
-	<p><%= @status %></p>
-	</div>
 	<div style="width:48%;float:left">
 		<h1><%= @cdetails[0]["cname"] %></h1>
-		<p><%= @cdetails[0]["street"] %></p>
-		<p><%= @cdetails[0]["town"] %></p>
+		<p><%= @cdetails[0]["address"] %></p>
 		<p><%= @cdetails[0]["phno"] %></p>
 		<p><%= @cdetails[0]["email"] %></p>
-		<p><%= @cdetails[0]["state_code"] %></p>
+		
 		<p><%= @cdetails[0]["gst_no"] %></p>
+		<p><%= @cdetails[0]["state_code"] %></p>
+
 	</div>
 	<div style="width:48%;float:right; text-align:right">
+
+	<% if @status==true %>
+		<h1>TAX INVOICE</h1>
+		<%else%>
 		<h1>INVOICE</h1>
+		<%end%>
 		<p><%= @cldetails[0]["date"] %></p>
 		<p><%= @cldetails[0]["ino"] %></p>
-		<p><%= @cldetails[0]["po"] %></p>
 		<p><%= @cldetails[0]["name"] %></p>
 		<p><%= @cldetails[0]["clname"] %></p>
-		<p><%= @cldetails[0]["state_code"] %></p>
+		<p><%= @cldetails[0]["address"] %></p>
+		<p><%= @cldetails[0]["po"] %></p>
 		<p><%= @cldetails[0]["gst_no"] %></p>
+		<p><%= @cldetails[0]["state_code"] %></p>
 	</div>
 </div>
 <hr>
@@ -221,7 +225,4 @@ td, th  {
 </div>
 <div>
 <p><%= @text2.html_safe %></p>
-</div>
-<div>
-      <p>© Copyright 2019 Drift.com, Inc.</p>
 </div>

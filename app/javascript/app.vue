@@ -9,24 +9,8 @@
     <b-container fluid class="background-color">
       <b-col>
         <b-container ref="content">
-            
-               
           <b-row>
-            <b-col sm="6">
-               <b-form-checkbox
-                id="checkbox-1"
-                v-model="status"
-                name="checkbox-1"
-                value="Tax Invoice"
-                unchecked-value="Invoice"
-                class="mb-4"
-              >
-                Tax Invoice
-                <div>Invoice Type: <strong>{{ status }}</strong></div>
-              </b-form-checkbox>
-
-              
-          
+            <b-col class="mt-5" sm="6">
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id1 " :class="validation? 'border-red': ''" size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
               </b-input-group>
@@ -39,20 +23,24 @@
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id6" size="sm" placeholder="Your Email id" v-model="cdetails[0].email"></b-form-input>
               </b-input-group>
+                 <template v-if="status==true">
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id8" :class="validation? 'border-red': ''" size="sm" placeholder="GST Number" v-model="cdetails[0].gst_no"></b-form-input>
+                    <b-form-input id="id8" :class="validation? 'border-red': ''" size="sm" placeholder="GST Number" v-model="cdetails[0].gst_no"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id7" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cdetails[0].state_code"></b-form-input>
               </b-input-group>
-              
+                 </template>
+                  
             </b-col>
             <b-col sm="6">
-              <h3 class="mt-2">INVOICE</h3>
+              <h3 class="mt-2" v-html="status? 'TAX INVOICE' : 'INVOICE' ">TAX INVOICE</h3>
               <b-input-group size="sm" class="mt-2">
-                <datepicker placeholder="Select Date" format="dd MMM yyyy" v-model="cldetails[0].date"></datepicker> 
-              
+                <datepicker placeholder="Select Date" format="dd MMM yyyy" v-model="cldetails[0].date"></datepicker>
               </b-input-group>          
+               <b-input-group size="sm" class="mt-2">
+                <b-form-input id="id2" size="sm" placeholder="Invoice Number" v-model="cldetails[0].ino"></b-form-input>
+              </b-input-group>
               <b-input-group size="sm" class="mt-2">              
                 <b-form-input id="id4" :class="validation? 'border-red': ''" size="sm" placeholder="Name" v-model="cldetails[0].name"></b-form-input>
               </b-input-group>
@@ -63,11 +51,9 @@
                 <b-form-input id="id3" size="sm" placeholder="Address" v-model="cldetails[0].address"></b-form-input>
               </b-input-group>
               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id2" size="sm" placeholder="Invoice Number" v-model="cldetails[0].ino"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id3" size="sm" placeholder="Pin Code" v-model="cldetails[0].po"></b-form-input>
               </b-input-group>
+                 <template v-if="status==true">
              
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id7" size="sm" placeholder="GST Number" v-model="cldetails[0].gst_no"></b-form-input>
@@ -75,7 +61,14 @@
               <b-input-group size="sm" class="mt-2">
                 <b-form-input id="id6" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cldetails[0].state_code"></b-form-input>
               </b-input-group>
-             
+                 </template>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col>
+              <b-form-checkbox v-model="status" name="checkbox-1" class="mb-2 mt-3">
+                Tax Invoice
+                </b-form-checkbox>
             </b-col>
           </b-row>
           <b-row class="mt-2">
@@ -240,9 +233,9 @@
               <vue-editor id="editor" placeholder="Enter your message" v-model="text2" :editor-toolbar="customToolbar"></vue-editor>
             </b-col>
           </b-row>
+          <p class="mt-2" align="center">© Copyright 2019 <a href="https://redpanthers.co">Red Panthers Software Solutions</a> Pvt Ltd.</p>
         </b-container>
       </b-col>
-      <p>© Copyright 2019 Red Panthers Software Solution, Inc.</p>
     </b-container>
   </div>
 </template>
@@ -252,9 +245,6 @@ import { VueEditor } from "vue2-editor";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
-var state ={ 
-  date: new Date(2019, 7, 29)
-}
 export default {
   components: {
     Datepicker,
@@ -262,6 +252,7 @@ export default {
   },
   data() {
     return {
+      status: false,
       validation: false,
       fields: [
         "index",
@@ -288,7 +279,7 @@ export default {
       ],
       cldetails: [
         {
-          date: "",
+          date: new Date(),
           ino: "",
           po: "",
           name: "",
@@ -300,7 +291,6 @@ export default {
       ],
       text1: "Thanks for your service",
       text2: "Payment terms: to be received in 5 days",
-      status: "Invoice",
       customToolbar: [
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }]
@@ -314,16 +304,16 @@ export default {
           discount: 0,
           discountPercentage: 0,
           cgstText: "CGST",
-          cgstPercentage: 0,
+          cgstPercentage: 9,
           cgst: 0,
           sgstText: "SGST",
-          sgstPercentage: 0,
+          sgstPercentage: 9,
           sgst: 0,
           igstText: "IGST",
-          igstPercentage: 0,
+          igstPercentage: 18,
           igst: 0,
           kfcText: "KFC",
-          kfcPercentage: 0,
+          kfcPercentage: 1,
           kfc: 0,
           grandTotalText: "Grand Total",
           grandTotal: 0
@@ -335,16 +325,38 @@ export default {
     footer: {
       deep: true,
       handler() {
+        this.findAllTax()
+      }
+    },
+    cldetails: {
+      deep: true,
+      handler() {
+        this.findAllTax()
+      }
+    },
+    cdetails: {
+      deep: true,
+      handler() {
+        this.findAllTax()
+      }
+    },
+    items: {
+      deep: true,
+      handler() {
+        this.findAllTax()
+      }
+    }
+    
+  },
+  methods: {
+    findAllTax() {
         this.findDiscount();
         this.findcgst();
         this.findsgst();
         this.findigst();
         this.findkfc();
         this.findGrandTotal();
-      }
-    }
-  },
-  methods: {
+    },
     generatePdf() {
       if (this.validatePDF())
       {
@@ -356,7 +368,8 @@ export default {
           this.items
         )}&text1=${JSON.stringify(this.text1)}&text2=${JSON.stringify(
           this.text2
-        )}&footer=${JSON.stringify(this.footer)}`
+        )}&footer=${JSON.stringify(this.footer)}
+        &status=${JSON.stringify(this.status)}`
       );
       }
       else
@@ -444,11 +457,17 @@ export default {
       this.items.pop();
     },
     validatePDF() {
-     return ((this.items.length!=0) && 
+      if (status==true)
+        return ((this.items.length!=0) && 
               (this.footer[0].subTotal!=0)&&
               this.cdetails[0].state_code && 
               this.cldetails[0].state_code &&
               this.cdetails[0].gst_no&& 
+              this.cdetails[0].cname && 
+              this.cldetails[0].name);
+      else
+      return ((this.items.length!=0) && 
+              (this.footer[0].subTotal!=0)&&
               this.cdetails[0].cname && 
               this.cldetails[0].name);
     }
@@ -465,5 +484,12 @@ export default {
 }
 .border-red { 
   border: #f00 1px solid;
+}
+.vdp-datepicker {
+    box-sizing: border-box;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important
 }
 </style>
