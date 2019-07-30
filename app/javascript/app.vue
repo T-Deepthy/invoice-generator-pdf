@@ -360,17 +360,33 @@ export default {
     generatePdf() {
       if (this.validatePDF())
       {
-        this.validation = false
-        window.open(
-        `/invoice/invoice.pdf?cdetails=${JSON.stringify(
-          this.cdetails
-        )}&cldetails=${JSON.stringify(this.cldetails)}&items=${JSON.stringify(
-          this.items
-        )}&text1=${JSON.stringify(this.text1)}&text2=${JSON.stringify(
-          this.text2
-        )}&footer=${JSON.stringify(this.footer)}
-        &status=${JSON.stringify(this.status)}`
-      );
+        let url =`/invoice/invoice.pdf?cdetails=${JSON.stringify(this.cdetails)}&cldetails=${JSON.stringify(this.cldetails)}&items=${JSON.stringify(this.items)}&text1=${JSON.stringify(this.text1)}&text2=${JSON.stringify(this.text2)}&footer=${JSON.stringify(this.footer)}&status=${JSON.stringify(this.status)}`
+        const link = document.createElement('a');
+        link.href = url;
+        link.click();
+
+      //   this.validation = false
+      //   axios.post(
+      //   `/invoice/invoice.pdf?cdetails=${JSON.stringify(
+      //     this.cdetails
+      //   )}&cldetails=${JSON.stringify(this.cldetails)}&items=${JSON.stringify(
+      //     this.items
+      //   )}&text1=${JSON.stringify(this.text1)}&text2=${JSON.stringify(
+      //     this.text2
+      //   )}&footer=${JSON.stringify(this.footer)}
+      //   &status=${JSON.stringify(this.status)}`, {
+      //     responseType: 'arraybuffer'
+      //   }
+      //   ).then(response => {
+      //     console.log('test')
+      //     console.log(response);
+      // const link = document.createElement('a');
+      // link.href = url;
+      // link.setAttribute('download', 'asda.pdf');
+      // document.body.appendChild(link);
+      // link.click();
+      // console.log('test')
+    // });
       }
       else
       {

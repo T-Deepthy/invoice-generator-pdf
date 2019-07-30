@@ -13,10 +13,9 @@ class HomeController < ApplicationController
     respond_to do |format| 
       format.html
       format.pdf do
-        render pdf:
-    params[:filename],
-                      page_size: 'A4',
-                      dpi: '300'
+        render pdf: params[:filename],
+                    page_size: 'A4',
+                    dpi: '300', disposition: 'attachment'
       end
     end
   end
