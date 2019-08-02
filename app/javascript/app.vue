@@ -1,76 +1,14 @@
 <template>
   <div>
-    <b-navbar type="dark" variant="info">
-      <b-navbar-brand href="#">This is a free <strong>GST</strong> invoice generator</b-navbar-brand>
-      <b-navbar-nav class="ml-auto">
-        <b-button variant="light" @click="generatePdf()">Generate PDF</b-button>
-      </b-navbar-nav>
-    </b-navbar>
+   <app-navigation></app-navigation>
     <b-container fluid class="background-color">
       <b-col>
         <b-container ref="content">
           <b-row>
-            <b-col class="mt-5" sm="6">
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id1 " :class="validation? 'border-red': ''" size="sm" placeholder="Your company name" v-model="cdetails[0].cname"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id4" size="sm" placeholder="Address" v-model="cdetails[0].address"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id5" size="sm" placeholder="Phone Number" v-model="cdetails[0].phno"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id6" size="sm" placeholder="Your Email id" v-model="cdetails[0].email"></b-form-input>
-              </b-input-group>
-                 <template v-if="status==true">
-              <b-input-group size="sm" class="mt-2">
-                    <b-form-input id="id8" :class="validation? 'border-red': ''" size="sm" placeholder="GST Number" v-model="cdetails[0].gst_no"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id7" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cdetails[0].state_code"></b-form-input>
-              </b-input-group>
-                 </template>
-                  
-            </b-col>
-            <b-col sm="6">
-              <h3 class="mt-2" v-html="status? 'TAX INVOICE' : 'INVOICE' ">TAX INVOICE</h3>
-              <b-input-group size="sm" class="mt-2">
-                <datepicker placeholder="Select Date" format="dd MMM yyyy" v-model="cldetails[0].date"></datepicker>
-              </b-input-group>          
-               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id2" size="sm" placeholder="Invoice Number" v-model="cldetails[0].ino"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">              
-                <b-form-input id="id4" :class="validation? 'border-red': ''" size="sm" placeholder="Name" v-model="cldetails[0].name"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id5" size="sm" placeholder="Client Company Name" v-model="cldetails[0].clname"></b-form-input>
-              </b-input-group>
-               <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id3" size="sm" placeholder="Address" v-model="cldetails[0].address"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id3" size="sm" placeholder="Pin Code" v-model="cldetails[0].po"></b-form-input>
-              </b-input-group>
-                 <template v-if="status==true">
-             
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id7" size="sm" placeholder="GST Number" v-model="cldetails[0].gst_no"></b-form-input>
-              </b-input-group>
-              <b-input-group size="sm" class="mt-2">
-                <b-form-input id="id6" :class="validation? 'border-red': ''" size="sm" placeholder="State Code" v-model="cldetails[0].state_code"></b-form-input>
-              </b-input-group>
-                 </template>
-            </b-col>
+            <companydetails></companydetails>
+            <clientdetails></clientdetails>
           </b-row>
-          <b-row>
-            <b-col>
-              <b-form-checkbox v-model="status" name="checkbox-1" class="mb-2 mt-3">
-                Tax Invoice
-                </b-form-checkbox>
-            </b-col>
-          </b-row>
+         <invoicecheckbox></invoicecheckbox>
           <b-row class="mt-2">
             <b-col>
               <vue-editor id="editor" placeholder="Enter your message" v-model="text1" :editor-toolbar="customToolbar"></vue-editor>
@@ -240,6 +178,10 @@
   </div>
 </template>
 <script>
+import AppNavigation from "./AppNavigation";
+import CompanyDetails from "./CompanyDetails";
+import ClientDetails from "./ClientDetails";
+import InvoiceCheckbox from "./InvoiceCheckbox"
 import Datepicker from "vuejs-datepicker";
 import { VueEditor } from "vue2-editor";
 import jsPDF from "jspdf";
@@ -248,7 +190,11 @@ import axios from "axios";
 export default {
   components: {
     Datepicker,
-    VueEditor
+    VueEditor,
+    AppNavigation,
+    CompanyDetails,
+    ClientDetails,
+    InvoiceCheckbox
   },
   data() {
     return {
