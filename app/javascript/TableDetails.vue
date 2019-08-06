@@ -2,161 +2,24 @@
      <div>
         <b-row class="mt-2">
             <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>Index</th>
-                    <th>HSN/SAC</th>
-                    <th>Item Description</th>
-                    <th>Quantity</th>
-                    <th>Unit Price</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, index) in items" :key="index">
-                    <td>{{index+1}}</td>
-                    <td>
-                      <b-form-input v-model="item.sn"></b-form-input>
-                    </td>
-                    <td class="item-table__item">
-                      <b-form-input v-model="item.item"></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input v-model="item.qty" @input="changeData(index)"></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input v-model="item.up" @input="changeData(index)"></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input v-model="item.tot" disabled></b-form-input>
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="4">
-                      <b-form-input v-model="footer[0].discountText" disabled></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input v-model="footer[0].discountPercentage"></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input v-model="footer[0].discount" disabled></b-form-input>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="5">
-                      <b-form-input v-model="footer[0].subTotalText" disabled></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input :class="validation? 'border-red': ''" v-model="footer[0].newsubTotal" disabled></b-form-input>
-                    </td>
-                  </tr>
-                  
-                  <template
-                    v-if="(cdetails[0].state_code==cldetails[0].state_code) && cdetails[0].gst_no && cldetails[0].gst_no"
-                  >
-                    <tr>
-                      <td colspan="4">
-                        <b-form-input v-model="footer[0].sgstText" disabled></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].sgstPercentage"></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].sgst" disabled></b-form-input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="4">
-                        <b-form-input v-model="footer[0].cgstText" disabled></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].cgstPercentage"></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].cgst" disabled></b-form-input>
-                      </td>
-                    </tr>
-                  </template>
-                  <template
-                    v-else-if="(cdetails[0].state_code!=cldetails[0].state_code) && cdetails[0].gst_no"
-                  >
-                    <tr>
-                      <td colspan="4">
-                        <b-form-input v-model="footer[0].igstText" disabled></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].igstPercentage"></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].igst" disabled></b-form-input>
-                      </td>
-                    </tr>
-                  </template>
-
-                  <template
-                    v-else-if="cldetails[0].state_code==32 && cdetails[0].state_code==32 && !cldetails[0].gst_no && cdetails[0].gst_no"
-                  >
-                    <tr>
-                      <td colspan="4">
-                        <b-form-input v-model="footer[0].kfcText" disabled></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].kfcPercentage"></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].kfc" disabled></b-form-input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="4">
-                        <b-form-input v-model="footer[0].sgstText" disabled></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].sgstPercentage"></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].sgst" disabled></b-form-input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="4">
-                        <b-form-input v-model="footer[0].cgstText" disabled></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].cgstPercentage" @input="findcgst"></b-form-input>
-                      </td>
-                      <td>
-                        <b-form-input v-model="footer[0].cgst" disabled></b-form-input>
-                      </td>
-                    </tr>
-                  </template>
-
-                  <tr>
-                    <td colspan="5">
-                      <b-form-input v-model="footer[0].grandTotalText" disabled></b-form-input>
-                    </td>
-                    <td>
-                      <b-form-input v-model="footer[0].grandTotal" disabled></b-form-input>
-                    </td>
-                  </tr>
-                </tfoot>
+               <table-header></table-header>
+                <table-body></table-body>
+                <table-footer></table-footer>
               </table>
             </b-row>
 
       </div>
 </template>
-// <script>
-// import TableHeader from "./TableHeader";
-// import TableBody from "./TableBody";
-// import TableFooter from "./TableFooter";
-// export default {
-//     components: { 
-//         TableHeader,
-//         TableBody,
-//         TableFooter
-//     }
-// }
-// </script>
+<script>
+import TableHeader from "./TableHeader";
+import TableBody from "./TableBody";
+import TableFooter from "./TableFooter";
+export default {
+    components: { 
+        TableHeader,
+        TableBody,
+        TableFooter
+    }
+}
+</script>
 
