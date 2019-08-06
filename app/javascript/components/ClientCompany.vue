@@ -51,6 +51,11 @@
 import { mapState } from "vuex"
 import Datepicker from "vuejs-datepicker";
 export default {
+  data() { 
+    return { 
+      status: false,
+    }
+  },
 	computed: {
 		...mapState('invoice', ['status', 'validation', 'cldetails'])
 	},
