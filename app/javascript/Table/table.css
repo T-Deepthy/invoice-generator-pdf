@@ -1,11 +1,7 @@
-.background-color {
-    background-color: #ffffff;
-    height: 100vh;
-  }
   .item-table__item {
     width: 400px !important;
   }
-  .border-red { 
+  .border-red {
     border: #f00 1px solid;
   }
   .vdp-datepicker {

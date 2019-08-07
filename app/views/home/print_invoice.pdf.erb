@@ -3,7 +3,7 @@ html, body, div, p{
 	margin: 0;
 	padding:0;
 }
-.table__border { 
+.table__border {
 border: 1px solid black;
 border-collapse: collapse;
 margin: 4rem 0;
@@ -13,7 +13,7 @@ text-align: center;
 td, th  {
 	 border: 1px solid black;
 }
-.text_align_left { 
+.text_align_left {
 	text-align: left;
 }
 .width_50 {
@@ -29,7 +29,6 @@ td, th  {
 		<p><%= @cdetails[0]["address"] %></p>
 		<p><%= @cdetails[0]["phno"] %></p>
 		<p><%= @cdetails[0]["email"] %></p>
-		
 		<p><%= @cdetails[0]["gst_no"] %></p>
 		<p><%= @cdetails[0]["state_code"] %></p>
 
@@ -53,7 +52,7 @@ td, th  {
 </div>
 <hr>
 <div>
-<p><%= @text1.html_safe %></p>
+<p><%= @text1 %></p>
 </div>
 </div>
 <div>
@@ -224,6 +223,5 @@ td, th  {
 </table>
 </div>
 <div>
-<p><%= @text2.html_safe %></p>
-<% byebug %>
+<p><%= @text2 %></p>
 </div>

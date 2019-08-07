@@ -2,16 +2,3 @@
     background-color: #ffffff;
     height: 100vh;
   }
-  .item-table__item {
-    width: 400px !important;
-  }
-  .border-red { 
-    border: #f00 1px solid;
-  }
-  .vdp-datepicker {
-      box-sizing: border-box;
-      width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      outline: none !important
-  }

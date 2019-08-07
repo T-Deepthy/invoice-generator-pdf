@@ -5,12 +5,12 @@ class HomeController < ApplicationController
     @cdetails = params["cdetails"] ? JSON.parse(params["cdetails"]) : []
     @cldetails = params["cldetails"] ? JSON.parse(params["cldetails"]) : []
     @items = params["items"] ? JSON.parse(params["items"]) : []
-    @text1=params["text1"] ? JSON.parse(params["text1"]) : []
-    @text2=params["text2"] ? JSON.parse(params["text2"]) : []
+    # @text1=params["text1"] ? JSON.parse(params["text1"]) : []
+    # @text2=params["text2"] ? JSON.parse(params["text2"]) : []
     @footer=params["footer"] ? JSON.parse(params["footer"]) : []
     @status = params["status"] ? JSON.parse(params["status"]) : []
 
-    respond_to do |format| 
+    respond_to do |format|
       format.html
       format.pdf do
         render pdf: params[:filename],
