@@ -63,7 +63,7 @@
 
         <template
           v-if="(cdetails[0].state_code==cldetails[0].state_code) &&
-          cdetails[0].gst_no && cldetails[0].gst_no">
+          cdetails[0].gst_no && cldetails[0].gst_no && status==true">
           <tr>
             <td colspan="4">
               <b-form-input v-model="footer[0].sgstText" disabled></b-form-input>
@@ -89,7 +89,7 @@
         </template>
         <template
           v-else-if="(cdetails[0].state_code!=cldetails[0].state_code) &&
-          cdetails[0].gst_no">
+          cdetails[0].gst_no  && status==true">
           <tr>
             <td colspan="4">
               <b-form-input v-model="footer[0].igstText" disabled></b-form-input>
@@ -105,7 +105,7 @@
 
         <template
           v-else-if="cldetails[0].state_code==32 && cdetails[0].state_code==32
-          && !cldetails[0].gst_no && cdetails[0].gst_no">
+          && !cldetails[0].gst_no && cdetails[0].gst_no  && status==true">
           <tr>
             <td colspan="4">
               <b-form-input v-model="footer[0].kfcText" disabled></b-form-input>

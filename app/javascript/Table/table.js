@@ -10,6 +10,24 @@ export default {
 		...mapState('invoice', ['status', 'validation', 'footer','cldetails', 'cdetails','items'])
 	},
   watch: {
+    footer: {
+            deep: true,
+            handler() {
+              this.findAllTax()
+            }
+          },
+          cldetails: {
+            deep: true,
+            handler() {
+              this.findAllTax()
+            }
+          },
+          cdetails: {
+            deep: true,
+            handler() {
+              this.findAllTax()
+            }
+          },
     items: {
       deep: true,
       handler() {

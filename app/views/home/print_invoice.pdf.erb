@@ -112,7 +112,7 @@ td, th  {
 		</td>
 	</tr>
 	
-	<% if (@cdetails[0]["state_code"] == @cldetails[0]["state_code"]) && @cdetails[0]["gst_no"].present? && @cldetails[0]["gst_no"].present? %>
+	<% if (@cdetails[0]["state_code"] == @cldetails[0]["state_code"]) && @cdetails[0]["gst_no"].present? && @cldetails[0]["gst_no"].present? && @status==true %>
 		<tr>
 			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 			<td colspan="4"  class="text_align_left">
@@ -143,7 +143,7 @@ td, th  {
 			<p><%= @footer[0]["cgst"]%></p>
 			</td>
 		</tr>
-	<% elsif (@cdetails[0]["state_code"] != @cldetails[0]["state_code"]) && @cdetails[0]["gst_no"].present? && @cldetails[0]["gst_no"].present? %>
+	<% elsif (@cdetails[0]["state_code"] != @cldetails[0]["state_code"]) && @cdetails[0]["gst_no"].present? &&  @status==true %>
 		<tr>
 			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 			<td colspan="4"  class="text_align_left">
@@ -159,9 +159,9 @@ td, th  {
 			<p><%= @footer[0]["igst"]%></p>
 			</td>
 		</tr>
-	<% elsif (@cldetails[0]["state_code"] == "32") && @cldetails[0]["gst_no"].blank? %>
+	<% elsif (@cldetails[0]["state_code"] == "32") && (@cdetails[0]["state_code"] == "32") && @cldetails[0]["gst_no"].blank? && @cdetails[0]["gst_no"].present? && @status==true%>
 		<tr>
-			<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
+	   		<% if  @items.pluck("sn").map(&:to_s).uniq!=["-"] && @items.pluck("sn").map(&:to_s).uniq!=[""] %>
 			<td colspan="4"  class="text_align_left">
 			<%else%>
 			<td colspan="3"  class="text_align_left">
